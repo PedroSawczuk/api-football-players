@@ -3,11 +3,28 @@ import { z } from 'zod'
 import { knex } from '../database'
 
 export async function playerModule(app: FastifyInstance) {
-  app.get('/', async (request, reply) => {
-    const players = await knex('players')
-      .select('*')
-      .where('position', 'forward')
-    return reply.status(200).send(players)
+  app.get('/', async () => {
+    const players = await knex('players').select('*')
+    return {
+      total: players.length,
+      players,
+    }
+  })
+
+  app.get('/:id', async (request, reply) => {
+    const getPlayerParamsSchema = z.object({
+      id: z.string().uuid(),
+    })
+
+    const { id } = getPlayerParamsSchema.parse(request.params)
+
+    const player = await knex('players').where({ id }).first()
+
+    if (!player) {
+      return reply.status(404).send('Jogador não encontrado!')
+    }
+
+    return player
   })
 
   app.post('/', async (request, reply) => {
