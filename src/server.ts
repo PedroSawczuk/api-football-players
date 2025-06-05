@@ -12,6 +12,10 @@ app.register(playerModule, {
   prefix: 'players',
 })
 
+app.setNotFoundHandler((request, reply) => {
+  reply.status(404).send(`A rota ${request.url} não foi encontrada.`)
+})
+
 app.listen({ port: env.PORT }, () => {
   console.log(`🌐 API rodando em http://localhost:${env.PORT}`)
 })
