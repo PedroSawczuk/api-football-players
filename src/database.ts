@@ -1,0 +1,16 @@
+import { knex as KDB, Knex } from 'knex';
+import { env } from './env';
+
+export const config: Knex.Config = {
+    client: 'sqlite3',
+    connection: {
+        filename: env.DATABASE_URL, 
+    },
+    useNullAsDefault: true,
+    migrations: {
+        extension: 'ts',
+        directory: env.MIGRATIONS_URL,
+    },
+}
+
+export const knex = KDB(config)
