@@ -1,6 +1,6 @@
 import fastify from 'fastify'
 import { env } from './env'
-import { addNewPlayer } from './module/add-new-player'
+import { playerModule } from './module/player-module'
 
 const app = fastify()
 
@@ -8,7 +8,7 @@ app.get('/', () => {
   return 'Bem-vindo à API de Gerenciamento de Jogadores!'
 })
 
-app.register(addNewPlayer, {
+app.register(playerModule, {
   prefix: 'players',
 })
 

@@ -2,7 +2,7 @@ import { FastifyInstance } from 'fastify'
 import { z } from 'zod'
 import { knex } from '../database'
 
-export async function addNewPlayer(app: FastifyInstance) {
+export async function playerModule(app: FastifyInstance) {
   app.get('/', async (request, reply) => {
     const players = await knex('players')
       .select('*')
